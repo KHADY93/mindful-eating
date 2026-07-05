@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+app/build/
+
+# Local configuration (SDK path, machine-specific)
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.DS_Store
+
+# Native / NDK
+.cxx/
+
+# Signing keys (never commit a release keystore)
+*.jks
+*.keystore
+
+# Local Claude Code tooling config
+.claude/
