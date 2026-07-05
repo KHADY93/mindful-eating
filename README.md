@@ -9,6 +9,16 @@ end the session.
 Built for the Pixel Watch 4 (standalone Wear OS app, no phone companion required), using
 Kotlin + Jetpack Compose for Wear OS.
 
+## Screenshots
+
+<p>
+  <img src="screenshots/01_idle.png" width="150" alt="Idle screen" />
+  <img src="screenshots/02_running.png" width="150" alt="Countdown running" />
+  <img src="screenshots/03_paused.png" width="150" alt="Paused" />
+  <img src="screenshots/04_settings.png" width="150" alt="Settings screen" />
+  <img src="screenshots/05_history.png" width="150" alt="Session history" />
+</p>
+
 ## Features
 
 - Perimeter progress ring that depletes over the countdown, tinted with your chosen accent color
