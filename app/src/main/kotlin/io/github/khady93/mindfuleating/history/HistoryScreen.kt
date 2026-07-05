@@ -1,4 +1,4 @@
-package io.github.khady93.eatslower.history
+package io.github.khady93.mindfuleating.history
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,8 +1,8 @@
-package io.github.khady93.eatslower.timer
+package io.github.khady93.mindfuleating.timer
 
 import androidx.compose.ui.graphics.Color
-import io.github.khady93.eatslower.settings.DEFAULT_DURATION_SECONDS
-import io.github.khady93.eatslower.theme.DefaultAccentColor
+import io.github.khady93.mindfuleating.settings.DEFAULT_DURATION_SECONDS
+import io.github.khady93.mindfuleating.theme.DefaultAccentColor
 
 enum class TimerPhase { Idle, Running, Paused }
 

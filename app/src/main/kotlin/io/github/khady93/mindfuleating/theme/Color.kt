@@ -1,4 +1,4 @@
-package io.github.khady93.eatslower.theme
+package io.github.khady93.mindfuleating.theme
 
 import androidx.compose.ui.graphics.Color
 

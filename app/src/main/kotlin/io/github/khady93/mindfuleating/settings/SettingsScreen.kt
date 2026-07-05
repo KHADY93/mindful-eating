@@ -1,4 +1,4 @@
-package io.github.khady93.eatslower.settings
+package io.github.khady93.mindfuleating.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,7 +31,7 @@ import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.IconButton
 import androidx.wear.compose.material3.ScrollIndicator
 import androidx.wear.compose.material3.Text
-import io.github.khady93.eatslower.theme.AccentSwatches
+import io.github.khady93.mindfuleating.theme.AccentSwatches
 import kotlinx.coroutines.launch
 
 private const val SWATCHES_PER_ROW = 5

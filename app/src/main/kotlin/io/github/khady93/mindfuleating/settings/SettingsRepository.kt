@@ -1,4 +1,4 @@
-package io.github.khady93.eatslower.settings
+package io.github.khady93.mindfuleating.settings
 
 import android.content.Context
 import androidx.compose.ui.graphics.Color
@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import io.github.khady93.eatslower.theme.DefaultAccentColor
+import io.github.khady93.mindfuleating.theme.DefaultAccentColor
 import kotlinx.coroutines.flow.map
 
 internal val Context.dataStore by preferencesDataStore(name = "settings")

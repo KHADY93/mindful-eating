@@ -1,14 +1,14 @@
-package io.github.khady93.eatslower.timer
+package io.github.khady93.mindfuleating.timer
 
 import android.app.Application
 import android.os.SystemClock
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.khady93.eatslower.history.HistoryRepository
-import io.github.khady93.eatslower.history.SessionRecord
-import io.github.khady93.eatslower.settings.DEFAULT_DURATION_SECONDS
-import io.github.khady93.eatslower.settings.SettingsRepository
+import io.github.khady93.mindfuleating.history.HistoryRepository
+import io.github.khady93.mindfuleating.history.SessionRecord
+import io.github.khady93.mindfuleating.settings.DEFAULT_DURATION_SECONDS
+import io.github.khady93.mindfuleating.settings.SettingsRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

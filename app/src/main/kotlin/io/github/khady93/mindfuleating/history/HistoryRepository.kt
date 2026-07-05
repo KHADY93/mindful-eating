@@ -1,9 +1,9 @@
-package io.github.khady93.eatslower.history
+package io.github.khady93.mindfuleating.history
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import io.github.khady93.eatslower.settings.dataStore
+import io.github.khady93.mindfuleating.settings.dataStore
 import kotlinx.coroutines.flow.map
 
 data class SessionRecord(

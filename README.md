@@ -1,4 +1,4 @@
-# Eat Slower
+# Mindful Eating
 
 A Wear OS app that helps you pace your meals. Start a session, and a countdown ring around
 the edge of the watch face depletes over a configurable interval (60 seconds by default).

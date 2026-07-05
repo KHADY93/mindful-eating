@@ -1,4 +1,4 @@
-package io.github.khady93.eatslower.timer
+package io.github.khady93.mindfuleating.timer
 
 import android.content.Context
 import android.os.Build

@@ -1,4 +1,4 @@
-package io.github.khady93.eatslower.timer
+package io.github.khady93.mindfuleating.timer
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable

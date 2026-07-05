@@ -1,12 +1,12 @@
-package io.github.khady93.eatslower
+package io.github.khady93.mindfuleating
 
 import androidx.compose.runtime.Composable
-import io.github.khady93.eatslower.history.HistoryRepository
-import io.github.khady93.eatslower.history.HistoryScreen
-import io.github.khady93.eatslower.settings.SettingsRepository
-import io.github.khady93.eatslower.settings.SettingsScreen
-import io.github.khady93.eatslower.timer.TimerScreen
-import io.github.khady93.eatslower.timer.TimerViewModel
+import io.github.khady93.mindfuleating.history.HistoryRepository
+import io.github.khady93.mindfuleating.history.HistoryScreen
+import io.github.khady93.mindfuleating.settings.SettingsRepository
+import io.github.khady93.mindfuleating.settings.SettingsScreen
+import io.github.khady93.mindfuleating.timer.TimerScreen
+import io.github.khady93.mindfuleating.timer.TimerViewModel
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController

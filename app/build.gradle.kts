@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.khady93.eatslower"
+    namespace = "io.github.khady93.mindfuleating"
 
     compileSdk {
         version = release(36) {
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "io.github.khady93.eatslower"
+        applicationId = "io.github.khady93.mindfuleating"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
