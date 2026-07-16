@@ -12,17 +12,23 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import io.github.khady93.mindfuleating.MainActivity
-import io.github.khady93.mindfuleating.R
+import com.google.android.gms.tasks.Tasks
+import com.google.android.gms.wearable.Wearable
 import io.github.khady93.mindfuleating.history.HistoryRepository
 import io.github.khady93.mindfuleating.history.SessionRecord
 import io.github.khady93.mindfuleating.settings.DEFAULT_DURATION_SECONDS
 import io.github.khady93.mindfuleating.settings.SettingsRepository
+import io.github.khady93.mindfuleating.sync.HistorySync
+import io.github.khady93.mindfuleating.sync.SettingsSync
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -38,6 +44,7 @@ private const val CHANNEL_ID = "eating_session"
  * minute updates, not a precise per-cycle vibration) — a foreground Service is what Wear OS
  * requires for reliable execution in that state.
  */
+@OptIn(FlowPreview::class)
 class TimerService : LifecycleService() {
 
     private val binder = LocalBinder()
@@ -70,6 +77,7 @@ class TimerService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        pullCurrentRemoteState()
 
         lifecycleScope.launch {
             settingsRepository.durationSecondsFlow.collect { seconds ->
@@ -86,6 +94,25 @@ class TimerService : LifecycleService() {
         lifecycleScope.launch {
             settingsRepository.accentColorFlow.collect { color ->
                 _uiState.update { it.copy(accentColor = color) }
+            }
+        }
+
+        // Push local settings/history changes to the paired device via the Data Layer API.
+        // debounce() lets both halves of a just-applied remote update settle locally before
+        // deciding whether to push (otherwise a torn intermediate read of the two flows could
+        // be mistaken for a new local change and echoed straight back out).
+        lifecycleScope.launch {
+            combine(settingsRepository.durationSecondsFlow, settingsRepository.accentColorFlow) { seconds, color ->
+                seconds to color
+            }.debounce(100).collect { (seconds, color) ->
+                SettingsSync.pushIfChanged(this@TimerService, seconds, color)
+            }
+        }
+        lifecycleScope.launch {
+            combine(historyRepository.sessionsFlow, historyRepository.tombstonesFlow) { records, tombstones ->
+                records to tombstones
+            }.debounce(100).collect { (records, tombstones) ->
+                HistorySync.pushIfChanged(this@TimerService, records, tombstones)
             }
         }
     }
@@ -185,6 +212,31 @@ class TimerService : LifecycleService() {
         }
     }
 
+    /**
+     * [DataLayerListenerService.onDataChanged] only fires for changes made *after* this app is
+     * listening — a freshly-installed companion app never gets a retroactive callback for
+     * whatever the other device already stored before it existed. This does a one-time pull of
+     * whatever's currently on the Data Layer at startup so a new install catches up immediately
+     * instead of waiting for the next unrelated change on the other device.
+     */
+    private fun pullCurrentRemoteState() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val dataItems = Tasks.await(Wearable.getDataClient(this@TimerService).dataItems)
+                for (item in dataItems) {
+                    when (item.uri.path) {
+                        SettingsSync.PATH -> SettingsSync.onRemoteDataChanged(this@TimerService, item)
+                        HistorySync.PATH -> HistorySync.onRemoteDataChanged(this@TimerService, item)
+                    }
+                }
+                dataItems.release()
+            } catch (e: Exception) {
+                // Best-effort catch-up; live sync via DataLayerListenerService still works
+                // going forward even if this initial pull fails.
+            }
+        }
+    }
+
     private fun createNotificationChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID,
@@ -196,16 +248,19 @@ class TimerService : LifecycleService() {
     }
 
     private fun buildNotification(): Notification {
+        // Resolve the host app's own launcher Activity generically (rather than a hardcoded
+        // MainActivity reference) since this Service is shared between the watch and phone apps.
+        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
         val contentIntent = PendingIntent.getActivity(
             this,
             0,
-            Intent(this, MainActivity::class.java),
+            launchIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle("Mindful Eating")
             .setContentText("Session in progress")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_STOPWATCH)
             .setContentIntent(contentIntent)

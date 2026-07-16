@@ -38,15 +38,20 @@ android {
 
 dependencies {
     implementation(project(":core"))
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.navigation.compose)
+
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.service)
-    implementation(libs.wear.compose.foundation)
-    implementation(libs.wear.compose.material3)
-    implementation(libs.wear.compose.navigation)
     implementation(libs.datastore.preferences)
-    implementation(libs.material.icons.extended)
     implementation(libs.play.services.wearable)
 }

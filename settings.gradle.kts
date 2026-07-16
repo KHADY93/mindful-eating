@@ -16,3 +16,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "MindfulEating"
 include(":app")
+include(":core")
+include(":mobile")
