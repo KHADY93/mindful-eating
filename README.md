@@ -12,6 +12,8 @@ phone), sharing a single non-UI `:core` module between both apps.
 
 ## Screenshots
 
+**Watch**
+
 <p>
   <img src="screenshots/01_idle.png" width="150" alt="Watch: idle screen" />
   <img src="screenshots/02_running.png" width="150" alt="Watch: countdown running" />
@@ -20,7 +22,15 @@ phone), sharing a single non-UI `:core` module between both apps.
   <img src="screenshots/05_history.png" width="150" alt="Watch: session history" />
 </p>
 
-*(Watch app pictured above; the phone app mirrors the same screens in Compose Material3.)*
+**Phone**
+
+<p>
+  <img src="screenshots/phone_01_idle.png" width="180" alt="Phone: idle screen" />
+  <img src="screenshots/phone_02_running.png" width="180" alt="Phone: countdown running" />
+  <img src="screenshots/phone_03_paused.png" width="180" alt="Phone: paused" />
+  <img src="screenshots/phone_04_settings.png" width="180" alt="Phone: settings screen" />
+  <img src="screenshots/phone_05_history.png" width="180" alt="Phone: session history" />
+</p>
 
 ## Features
 
